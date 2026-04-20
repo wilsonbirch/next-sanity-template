@@ -50,9 +50,9 @@ function withDefaults(settings: SiteSettings | null | undefined) {
     businessName: settings?.businessName || SITE_DEFAULTS.businessName,
     tagline: settings?.tagline || SITE_DEFAULTS.tagline,
     logo: settings?.logo ?? null,
-    navLinks: validLinks.length
-      ? (validLinks as ReadonlyArray<{ label: string; href: string }>)
-      : SITE_DEFAULTS.navLinks,
+    navLinks: (validLinks.length
+      ? validLinks
+      : [...SITE_DEFAULTS.navLinks]) as Array<{ label: string; href: string }>,
     headerCta:
       settings?.headerCta?.label && settings?.headerCta?.href
         ? { label: settings.headerCta.label, href: settings.headerCta.href }
