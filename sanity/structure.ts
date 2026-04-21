@@ -5,6 +5,7 @@ import { SINGLETON_TYPES } from "./schemas";
 const SINGLETON_TITLES: Record<string, string> = {
   siteSettings: "Site Settings",
   homePage: "Home Page",
+  contactPage: "Contact Page",
 };
 
 export const structure: StructureResolver = (S) =>

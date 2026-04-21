@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 import { contactSchema, type ContactResult } from "@/lib/contact-schema";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -15,6 +16,14 @@ export const runtime = "nodejs";
  * email delivery is wired up.
  */
 export async function POST(request: Request): Promise<NextResponse<ContactResult>> {
+  const limit = rateLimit(`contact:${clientIp(request.headers)}`);
+  if (!limit.ok) {
+    return NextResponse.json(
+      { ok: false, error: "Too many requests. Please try again shortly." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } },
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();

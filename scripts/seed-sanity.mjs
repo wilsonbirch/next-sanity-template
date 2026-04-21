@@ -98,8 +98,11 @@ const homePage = {
   ],
 };
 
+// IDs with dots are treated as multi-segment paths and excluded by the
+// default public-read grant (`_id in path("*")`). Use single-segment IDs
+// for collection docs that need to be readable anonymously.
 const aboutPage = {
-  _id: "page.about",
+  _id: "page-about",
   _type: "page",
   title: "About",
   slug: { _type: "slug", current: "about" },
@@ -119,10 +122,18 @@ const aboutPage = {
   ],
 };
 
+const contactPage = {
+  _id: "contactPage",
+  _type: "contactPage",
+  heading: "Get in touch",
+  intro: "Send a message and we'll get back to you soon.",
+  successMessage: "Thanks — message received.",
+};
+
 async function run() {
   console.log(`->  Seeding ${projectId}/${dataset}`);
 
-  for (const doc of [siteSettings, homePage, aboutPage]) {
+  for (const doc of [siteSettings, homePage, contactPage, aboutPage]) {
     await client.createOrReplace(doc);
     console.log(`   ok ${doc._type} (${doc._id})`);
   }

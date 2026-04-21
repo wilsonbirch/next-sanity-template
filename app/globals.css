@@ -12,10 +12,33 @@
   --color-brand-soft: #4a5a5b;
   --color-brand-warm: #a9a99c;
   --color-accent: #c9a96a;
+  --color-footer-bg: #1a1d1d;
+  --color-footer-fg: #ffffff;
+  --color-footer-fg-muted: rgba(255, 255, 255, 0.7);
+}
+
+.dark {
+  --color-bg: #0e1011;
+  --color-surface: #16191a;
+  --color-ink: #e8e6df;
+  --color-ink-muted: #9aa09e;
+  --color-rule: #262b2c;
+  --color-brand: #d8c69a;
+  --color-brand-soft: #c9b487;
+  --color-brand-warm: #4a5a5b;
+  --color-accent: #c9a96a;
+  --color-footer-bg: #08090a;
+  --color-footer-fg: #e8e6df;
+  --color-footer-fg-muted: rgba(232, 230, 223, 0.65);
 }
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
@@ -28,7 +51,7 @@ body {
 
 ::selection {
   background: var(--color-brand);
-  color: white;
+  color: var(--color-bg);
 }
 
 .font-display {

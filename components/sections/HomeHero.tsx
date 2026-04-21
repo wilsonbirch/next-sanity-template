@@ -1,12 +1,16 @@
 import Image from "next/image";
-import Link from "next/link";
 
+import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow, Heading } from "@/components/ui/Heading";
 import { Section } from "@/components/ui/Section";
 import { sanityImageProps, type SanityImage } from "@/lib/sanity-image";
+import type { CtaStyle } from "@/lib/site";
 
-type Cta = { label?: string | null; href?: string | null } | null | undefined;
+type Cta =
+  | { label?: string | null; href?: string | null; style?: CtaStyle | null }
+  | null
+  | undefined;
 
 export function HomeHero({
   eyebrow,
@@ -38,12 +42,9 @@ export function HomeHero({
           )}
           {cta?.href && cta?.label && (
             <div className="mt-8">
-              <Link
-                href={cta.href}
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[color:var(--color-brand)] px-7 text-sm font-medium text-white transition hover:bg-[color:var(--color-brand-soft)]"
-              >
+              <Button href={cta.href} variant={cta.style ?? "primary"} size="lg">
                 {cta.label}
-              </Link>
+              </Button>
             </div>
           )}
         </div>

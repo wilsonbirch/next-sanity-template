@@ -8,7 +8,7 @@ import { PortableText } from "@/components/ui/PortableText";
 import { Section } from "@/components/ui/Section";
 import { allPageSlugsQuery, pageBySlugQuery } from "@/lib/queries";
 import { sanityFetch } from "@/lib/sanity";
-import { sanityImageProps, type SanityImage } from "@/lib/sanity-image";
+import { sanityImageProps, sanityImageUrl, type SanityImage } from "@/lib/sanity-image";
 
 export const revalidate = 60;
 
@@ -17,7 +17,11 @@ type PageData = {
   slug: string;
   heroImage?: SanityImage | null;
   body?: unknown;
-  seo?: { title?: string | null; description?: string | null } | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    ogImage?: SanityImage | null;
+  } | null;
 };
 
 export async function generateStaticParams() {
@@ -42,9 +46,23 @@ export async function generateMetadata({
       tags: [`page:${slug}`],
     });
     if (!data) return {};
+    const title = data.seo?.title ?? data.title;
+    const description = data.seo?.description ?? undefined;
+    const ogImage = sanityImageUrl(data.seo?.ogImage, { width: 1200, height: 630 });
     return {
-      title: data.seo?.title ?? data.title,
-      description: data.seo?.description ?? undefined,
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        images: ogImage ? [{ url: ogImage, width: 1200, height: 630 }] : undefined,
+      },
+      twitter: {
+        card: ogImage ? "summary_large_image" : "summary",
+        title,
+        description,
+        images: ogImage ? [ogImage] : undefined,
+      },
     };
   } catch {
     return {};

@@ -52,3 +52,12 @@ export const pageBySlugQuery = /* groq */ `
 `;
 
 export const allPageSlugsQuery = /* groq */ `*[_type == "page" && defined(slug.current)][].slug.current`;
+
+export const contactPageQuery = /* groq */ `
+  *[_type == "contactPage"][0]{
+    heading,
+    intro,
+    successMessage,
+    seo{ ..., ogImage${imageProjection} }
+  }
+`;
