@@ -9,8 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import type { CtaStyle } from "@/lib/site";
 
-import { ThemeToggle } from "./ThemeToggle";
-
 type NavLink = { label: string; href: string };
 type Cta = { label: string; href: string; style?: CtaStyle } | null;
 
@@ -104,17 +102,14 @@ export function MobileNav({
             className="flex items-center justify-between border-b border-[color:var(--color-rule)] px-6 py-4"
           >
             <span className="font-display text-lg">Menu</span>
-            <div className="flex items-center gap-1">
-              <ThemeToggle />
-              <button
-                type="button"
-                aria-label="Close menu"
-                onClick={() => setOpen(false)}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[color:var(--color-ink)] transition hover:bg-[color:var(--color-rule)]/40"
-              >
-                <X aria-hidden className="h-5 w-5" />
-              </button>
-            </div>
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[color:var(--color-ink)] transition hover:bg-[color:var(--color-rule)]/40"
+            >
+              <X aria-hidden className="h-5 w-5" />
+            </button>
           </div>
           <nav
             style={{ backgroundColor: "var(--color-bg)", flex: "1 1 auto" }}
