@@ -29,24 +29,24 @@ export async function Footer() {
 
   return (
     <footer className="border-t border-[color:var(--color-rule)] bg-[color:var(--color-footer-bg)] text-[color:var(--color-footer-fg)]">
-      <Container width="wide" as="div" className="grid gap-12 py-16 lg:grid-cols-12">
-        <div className="lg:col-span-5">
+      <Container width="wide" as="div" className="flex flex-col gap-12 py-16 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
+        <div className="lg:max-w-md">
           <div className="[&_a]:!text-[color:var(--color-footer-fg)] [&_a_span:first-child]:!text-[color:var(--color-footer-fg)] [&_a_span:last-child]:!text-[color:var(--color-footer-fg-muted)]">
             <Logo businessName={settings.businessName} logo={settings.logo} />
           </div>
           {settings.tagline && (
-            <p className="mt-4 max-w-md font-display text-lg leading-snug text-[color:var(--color-footer-fg)]">
+            <p className="mt-4 font-display text-lg leading-snug text-[color:var(--color-footer-fg)]">
               {settings.tagline}
             </p>
           )}
           {settings.footerText && (
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-[color:var(--color-footer-fg-muted)]">
+            <p className="mt-4 text-sm leading-relaxed text-[color:var(--color-footer-fg-muted)]">
               {settings.footerText}
             </p>
           )}
         </div>
 
-        <div className="lg:col-span-3">
+        <div>
           <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-[color:var(--color-footer-fg-muted)]">
             Explore
           </h3>
@@ -64,7 +64,7 @@ export async function Footer() {
           </ul>
         </div>
 
-        <div className="lg:col-span-4">
+        <div>
           <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-[color:var(--color-footer-fg-muted)]">
             Contact
           </h3>
