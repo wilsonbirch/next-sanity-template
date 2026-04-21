@@ -13,7 +13,7 @@ const INITIAL: ContactInput = {
   website: "",
 };
 
-export function ContactForm() {
+export function ContactForm({ successMessage }: { successMessage?: string | null } = {}) {
   const [values, setValues] = useState<ContactInput>(INITIAL);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -66,7 +66,9 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <div className="rounded-lg border border-[color:var(--color-rule)] bg-[color:var(--color-surface)] p-8 text-center">
-        <p className="font-display text-2xl text-[color:var(--color-ink)]">Thanks — message received.</p>
+        <p className="font-display text-2xl text-[color:var(--color-ink)]">
+          {successMessage || "Thanks — message received."}
+        </p>
         <p className="mt-2 text-[color:var(--color-ink-muted)]">We&apos;ll be in touch shortly.</p>
       </div>
     );

@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -23,6 +24,11 @@ const config: Config = {
           warm: "var(--color-brand-warm)",
         },
         accent: "var(--color-accent)",
+        footer: {
+          DEFAULT: "var(--color-footer-bg)",
+          fg: "var(--color-footer-fg)",
+          muted: "var(--color-footer-fg-muted)",
+        },
       },
       fontFamily: {
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
