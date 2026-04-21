@@ -13,27 +13,15 @@ jobs:
   deploy:
     name: Fly deploy
     runs-on: ubuntu-latest
-    # Wait for CI to pass before deploying.
-    needs: []
     steps:
       - uses: actions/checkout@v4
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
 
-      # NEXT_PUBLIC_* are inlined into the client bundle at build time and
-      # therefore aren't secret. Set them as repository variables (Settings
-      # → Secrets and variables → Actions → Variables) so they're visible
-      # in deploy logs.
-      #
-      # Runtime secrets (RESEND_API_KEY, SANITY_API_READ_TOKEN,
-      # CONTACT_FORM_TO_EMAIL) live in Fly secrets:
-      #   fly secrets set RESEND_API_KEY=... CONTACT_FORM_TO_EMAIL=...
+      # Build args + runtime env are configured in fly.toml.
+      # Runtime secrets (RESEND_API_KEY, SANITY_API_READ_TOKEN, etc.)
+      # are set via `fly secrets set`.
       - name: Deploy
-        run: |
-          flyctl deploy --remote-only \
-            --build-arg NEXT_PUBLIC_SANITY_PROJECT_ID="${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}" \
-            --build-arg NEXT_PUBLIC_SANITY_DATASET="${{ vars.NEXT_PUBLIC_SANITY_DATASET || 'production' }}" \
-            --build-arg NEXT_PUBLIC_SANITY_API_VERSION="${{ vars.NEXT_PUBLIC_SANITY_API_VERSION || '2024-10-01' }}" \
-            --build-arg NEXT_PUBLIC_SITE_URL="${{ vars.NEXT_PUBLIC_SITE_URL }}"
+        run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

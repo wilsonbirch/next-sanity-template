@@ -1,38 +1,46 @@
-# Run `fly launch --no-deploy --copy-config` once to register the app
-# under your Fly account, then this file becomes the source of truth.
-# `fly launch` will prompt for an app name + region and update this file
-# in place.
+# fly.toml app configuration file generated for next-sanity-template on 2026-04-20T22:32:38-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "next-sanity-template"
-primary_region = "iad"
+app = 'next-sanity-template'
+primary_region = 'iad'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
+
   # NEXT_PUBLIC_* values are inlined into the client bundle at build
-  # time. They are NOT secret. Override per-environment via
-  # `fly deploy --build-arg KEY=value` or by editing this block.
+  # time. They are not secret. Bump NEXT_PUBLIC_SITE_URL when you
+  # attach a custom domain.
   [build.args]
-    NEXT_PUBLIC_SANITY_DATASET = "production"
-    NEXT_PUBLIC_SANITY_API_VERSION = "2024-10-01"
-    # Set these for your project before deploying:
-    # NEXT_PUBLIC_SANITY_PROJECT_ID = "xxxxxxxx"
-    # NEXT_PUBLIC_SITE_URL = "https://your-app.fly.dev"
+    NEXT_PUBLIC_SANITY_PROJECT_ID = 'divozw1k'
+    NEXT_PUBLIC_SANITY_DATASET = 'production'
+    NEXT_PUBLIC_SANITY_API_VERSION = '2024-10-01'
+    NEXT_PUBLIC_SITE_URL = 'https://next-sanity-template.fly.dev'
+
+# Runtime config — visible in fly.toml (i.e. in git). Only put
+# non-secret values here. For RESEND_API_KEY, SANITY_API_READ_TOKEN,
+# CONTACT_FORM_TO_EMAIL, etc. use:
+#   fly secrets set KEY=value
+[env]
+  NODE_ENV = 'production'
 
 [http_service]
   internal_port = 3000
   force_https = true
-  auto_stop_machines = "stop"
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
-  processes = ["app"]
+  processes = ['app']
 
   [http_service.concurrency]
-    type = "requests"
-    soft_limit = 200
+    type = 'requests'
     hard_limit = 250
+    soft_limit = 200
 
 [[vm]]
-  size = "shared-cpu-1x"
-  memory = "512mb"
-  cpu_kind = "shared"
+  size = 'shared-cpu-1x'
+  memory = '512mb'
+  cpu_kind = 'shared'
   cpus = 1
+  memory_mb = 512
