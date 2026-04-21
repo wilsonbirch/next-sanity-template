@@ -69,7 +69,7 @@ const siteSettings = {
     { _key: "about", label: "About", href: "/about" },
     { _key: "contact", label: "Contact", href: "/contact" },
   ],
-  headerCta: { label: "Contact", href: "#contact" },
+  headerCta: { label: "Contact", href: "/contact" },
   email: "hello@example.com",
   footerText: "A short description of your business or project.",
 };
@@ -81,21 +81,8 @@ const homePage = {
   heroTitle: "Your headline goes here.",
   heroSubtitle:
     "This placeholder is editable from /studio. Replace it with copy that tells visitors what you do.",
-  heroCta: { label: "Get in touch", href: "#contact" },
-  body: [
-    {
-      _type: "block",
-      _key: "intro",
-      style: "normal",
-      children: [
-        {
-          _type: "span",
-          _key: "intro-text",
-          text: "Edit this content in Sanity Studio -- it syncs to the page on save.",
-        },
-      ],
-    },
-  ],
+  heroCta: { label: "Get in touch", href: "/contact" },
+  body: [],
 };
 
 // IDs with dots are treated as multi-segment paths and excluded by the

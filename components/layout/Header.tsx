@@ -10,8 +10,19 @@ import { ThemeToggle } from "./ThemeToggle";
 export async function Header() {
   const settings = await getSiteSettings();
 
-  const visibleLinks = settings.navLinks.filter((l) => l.href !== "/");
-  if (!visibleLinks.some((l) => l.href === "/contact")) {
+  // Drop the home link from the nav (the logo handles it) and any link
+  // that duplicates the header CTA's destination — the CTA button is
+  // the more prominent affordance for the same page.
+  const ctaHref = settings.headerCta?.href;
+  const visibleLinks = settings.navLinks
+    .filter((l) => l.href !== "/")
+    .filter((l) => !ctaHref || l.href !== ctaHref);
+
+  // Always surface a way to reach Contact — either as a nav link or
+  // via the CTA. Auto-add only if neither already covers it.
+  const hasContact =
+    visibleLinks.some((l) => l.href === "/contact") || ctaHref === "/contact";
+  if (!hasContact) {
     visibleLinks.push({ label: "Contact", href: "/contact" });
   }
 
