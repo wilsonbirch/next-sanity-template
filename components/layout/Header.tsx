@@ -44,7 +44,7 @@ export async function Header() {
               {settings.headerCta.label}
             </Button>
           )}
-          <ThemeToggle className="hidden lg:inline-flex" />
+          <ThemeToggle />
           <MobileNav links={visibleLinks} cta={settings.headerCta} />
         </div>
       </Container>

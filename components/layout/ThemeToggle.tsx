@@ -1,25 +1,23 @@
 "use client";
 
-import { Monitor, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
 
 import { cn } from "@/lib/cn";
 
-type Theme = "system" | "light" | "dark";
+type Theme = "light" | "dark";
 
 const STORAGE_KEY = "theme";
 const STORE_EVENT = "themechange";
 
 function applyTheme(theme: Theme) {
-  const isDark =
-    theme === "dark" ||
-    (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  document.documentElement.classList.toggle("dark", isDark);
+  document.documentElement.classList.toggle("dark", theme === "dark");
 }
 
 function readTheme(): Theme {
   const stored = window.localStorage.getItem(STORAGE_KEY);
-  return stored === "light" || stored === "dark" ? stored : "system";
+  if (stored === "light" || stored === "dark") return stored;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function subscribe(onChange: () => void) {
@@ -31,34 +29,25 @@ function subscribe(onChange: () => void) {
   };
 }
 
-const getServerSnapshot = (): Theme => "system";
+const getServerSnapshot = (): Theme => "light";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const theme = useSyncExternalStore(subscribe, readTheme, getServerSnapshot);
 
-  function cycle() {
-    const next: Theme = theme === "system" ? "light" : theme === "light" ? "dark" : "system";
-    if (next === "system") {
-      window.localStorage.removeItem(STORAGE_KEY);
-    } else {
-      window.localStorage.setItem(STORAGE_KEY, next);
-    }
+  function toggle() {
+    const next: Theme = theme === "dark" ? "light" : "dark";
+    window.localStorage.setItem(STORAGE_KEY, next);
     applyTheme(next);
     window.dispatchEvent(new Event(STORE_EVENT));
   }
 
-  const Icon = theme === "light" ? Sun : theme === "dark" ? Moon : Monitor;
-  const label =
-    theme === "light"
-      ? "Switch to dark theme"
-      : theme === "dark"
-        ? "Switch to system theme"
-        : "Switch to light theme";
+  const Icon = theme === "dark" ? Sun : Moon;
+  const label = theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
 
   return (
     <button
       type="button"
-      onClick={cycle}
+      onClick={toggle}
       aria-label={label}
       title={label}
       suppressHydrationWarning
